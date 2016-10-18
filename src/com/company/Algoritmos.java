@@ -53,32 +53,33 @@ public class Algoritmos<T extends Comparable<T>>
         Collections.sort(graph.getEdges());
         //AQUI YA TENEMOS ORDENADOS DE MENOR A MAYOR LOS PESOS
 
-        DisjointSet<Graph.Node<Integer>> djs = new DisjointSet<>();
-        List<DisjointSet.Item<Graph.Node<Integer>>> visited_disjoint_nodes = new ArrayList<>();
+        DisjointSet<Graph.Node<Integer>> djs = new DisjointSet<>(); //Inicializar el UNION struct
+        List<DisjointSet.Item<Graph.Node<Integer>>> visited_disjoint_nodes = new ArrayList<>(); //Aqui meteremos los nodos ya visitados
 
+        //estas son banderas temporales
         DisjointSet.Item<Graph.Node<Integer>> from=null;
         DisjointSet.Item<Graph.Node<Integer>> to=null;
 
-        for (Graph.Arista arista: graph.getEdges())
+        for (Graph.Arista arista: graph.getEdges()) //Iteramos sobre la lista de aristas ordenada por costo
         {
-            int from_index = djs.indexOfNode(visited_disjoint_nodes,arista.getFromNode());
+            int from_index = djs.indexOfNode(visited_disjoint_nodes,arista.getFromNode()); //Indice de nodos origen/destino
             int to_index = djs.indexOfNode(visited_disjoint_nodes,arista.getToNode());
 
-            if (from_index==-1) //Debemos crearlo
+            if (from_index==-1) //Significa que no ha sido visitado o no tenemos registro de el
                 from = djs.makeSet(arista.getFromNode());
             else
-                from = visited_disjoint_nodes.get(from_index);
+                from = visited_disjoint_nodes.get(from_index); //Ya existe y pertenece a alguna raiz, obtenerlo
             if (to_index==-1)
-                to = djs.makeSet(arista.getToNode());
+                to = djs.makeSet(arista.getToNode()); //Lo mismo que con el from
             else
                 to = visited_disjoint_nodes.get(to_index);
 
 
-            if (djs.find(from)!=djs.find(to)) //SI NO ESTAN UNIDOS
+            if (djs.find(from)!=djs.find(to)) //SI NO ESTAN UNIDOS POR LA MISMA RAIZ, CONECTARLOS
             {
-                djs.union(from, to);
-                cost += arista.getCost();
-                camino.add(arista);
+                djs.union(from, to);        //Unir bosques
+                cost += arista.getCost();   //Sumar costo de arista
+                camino.add(arista);         //Agregar al arbol final
                 if (to_index == -1) visited_disjoint_nodes.add(to);     //Agregar a visitados
                 if (from_index == -1) visited_disjoint_nodes.add(from); //Agregar a visitados
             }

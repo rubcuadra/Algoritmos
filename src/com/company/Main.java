@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Main
 {
-    private static final String path="src/com/company/P2Edges.txt";
+    private static final String path="src/com/company/test.txt";
     private static final Integer primStartNode = 0;
 
     public static void main(String[] args)
