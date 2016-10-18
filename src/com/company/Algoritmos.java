@@ -105,7 +105,7 @@ public class Algoritmos<T extends Comparable<T>>
         for (int i = 0; i < graph.getEdges().size(); i++)
         {
             Graph.Arista a = graph.getEdges().get(i);
-            
+
             boolean back = areBackwardConnected(a.getFromNode(),a.getToNode(),new ArrayList<>(camino));
             boolean front = areForwardConnected(a.getFromNode(),a.getToNode(),new ArrayList<>(camino));
             //esos ya estan bien
