@@ -50,16 +50,40 @@ public class Algoritmos<T extends Comparable<T>>
         final List<Graph.Arista<Integer>> camino = new ArrayList<>();
         int cost = 0;
 
-        Collections.sort(graph.getEdges(),(Graph.Arista<Integer> o1, Graph.Arista<Integer> o2)->
-        {
-            return o1.compareTo(o2);
-        });
-
+        Collections.sort(graph.getEdges());
         //AQUI YA TENEMOS ORDENADOS DE MENOR A MAYOR LOS PESOS
 
-        //Falta implementar kruskall
+        DisjointSet<Graph.Node<Integer>> djs = new DisjointSet<>();
+        List<DisjointSet.Item<Graph.Node<Integer>>> visited_disjoint_nodes = new ArrayList<>();
+
+        DisjointSet.Item<Graph.Node<Integer>> from=null;
+        DisjointSet.Item<Graph.Node<Integer>> to=null;
+
+        for (Graph.Arista arista: graph.getEdges())
+        {
+            int from_index = djs.indexOfNode(visited_disjoint_nodes,arista.getFromNode());
+            int to_index = djs.indexOfNode(visited_disjoint_nodes,arista.getToNode());
+
+            if (from_index==-1) //Debemos crearlo
+                from = djs.makeSet(arista.getFromNode());
+            else
+                from = visited_disjoint_nodes.get(from_index);
+            if (to_index==-1)
+                to = djs.makeSet(arista.getToNode());
+            else
+                to = visited_disjoint_nodes.get(to_index);
 
 
+            if (djs.find(from)!=djs.find(to)) //SI NO ESTAN UNIDOS
+            {
+                djs.union(from, to);
+                cost += arista.getCost();
+                camino.add(arista);
+                if (to_index == -1) visited_disjoint_nodes.add(to);     //Agregar a visitados
+                if (from_index == -1) visited_disjoint_nodes.add(from); //Agregar a visitados
+            }
+        }
         return (new Graph.CostPathPair<Integer>(cost,camino));
     }
+
 }

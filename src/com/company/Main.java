@@ -72,8 +72,8 @@ public class Main
         Graph.CostPathPair<Integer> prim = algoritmos.Prim(g, g.getNodes().get(primStartNode));
         Graph.CostPathPair<Integer> krus = algoritmos.Kruskal_UNION(g);
 
-        //System.out.println(prim);
-        //System.out.println(krus);
+        System.out.println(prim);
+        System.out.println(krus);
 
         //for (Graph.Arista<Integer> a:prim.getPath()) if (!krus.getPath().contains(a)) System.out.print(a);
 
