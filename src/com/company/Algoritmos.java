@@ -9,6 +9,12 @@ public class Algoritmos<T extends Comparable<T>>
 {
     public Graph.CostPathPair<Integer> Prim(Graph<T> graph, Graph.Node<T> inicio)
     {
+
+        return null;
+    }
+
+    public Graph.CostPathPair<Integer> Prim_Heap(Graph<Integer> graph,Graph.Node<T> inicio)
+    {
         int cost = 0;
         final Set<Graph.Node<Integer>> unvisited = new HashSet<Graph.Node<Integer>>();
         unvisited.addAll((Collection)graph.getNodes());
@@ -43,11 +49,6 @@ public class Algoritmos<T extends Comparable<T>>
             unvisited.remove(node);     //Vamos quitando sin visitar
         }
         return (new Graph.CostPathPair<Integer>(cost,camino));
-    }
-
-    public Graph.CostPathPair<Integer> Prim_Heap(Graph<Integer> graph,Graph.Node<T> inicio)
-    {
-        return null;
     }
 
     public Graph.CostPathPair<Integer> Kruskal(Graph<Integer> graph)

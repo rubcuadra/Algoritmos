@@ -74,6 +74,8 @@ public class Main
         //Graph.CostPathPair<Integer> krus_union = algoritmos.Kruskal_UNION(g);
 
         //System.out.println(prim);
+        System.out.println(prim_heap);
+
         //System.out.println(krus_union);
 
     }
