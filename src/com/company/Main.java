@@ -69,13 +69,15 @@ public class Main
         System.out.println("Total de Aristas NO dirigidas: "+g.getEdges().size()/2); //Por que como es no dirigido se duplican aristas
 
         Algoritmos<Integer> algoritmos = new Algoritmos<Integer>();
+
         //Graph.CostPathPair<Integer> prim = algoritmos.Prim(g, g.getNodes().get(primStartNode));
-        Graph.CostPathPair<Integer> prim_heap = algoritmos.Prim_Heap(g,g.getNodes().get(primStartNode));
+        //Graph.CostPathPair<Integer> prim_heap = algoritmos.Prim_Heap(g,g.getNodes().get(primStartNode));
+        //Graph.CostPathPair<Integer> krus= algoritmos.Kruskal(g);
         //Graph.CostPathPair<Integer> krus_union = algoritmos.Kruskal_UNION(g);
 
         //System.out.println(prim);
-        System.out.println(prim_heap);
-
+        //System.out.println(prim_heap);
+        //System.out.println(krus);
         //System.out.println(krus_union);
 
     }

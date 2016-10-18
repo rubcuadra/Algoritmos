@@ -9,8 +9,50 @@ public class Algoritmos<T extends Comparable<T>>
 {
     public Graph.CostPathPair<Integer> Prim(Graph<T> graph, Graph.Node<T> inicio)
     {
+        int cost = 0;
+        final Set<Graph.Node<Integer>> unvisited = new HashSet<Graph.Node<Integer>>();
+        unvisited.addAll((Collection)graph.getNodes());
+        unvisited.remove(inicio);
 
-        return null;
+        final List<Graph.Arista<Integer>> camino = new ArrayList<Graph.Arista<Integer>>();
+        final List<Graph.Arista<Integer>> aristasDisponibles = new ArrayList<>();
+
+        Graph.Node<Integer> node = (Graph.Node<Integer>) inicio;
+
+        while (!unvisited.isEmpty()) // Todos los nodos seran NO visitados al inicio
+        {
+            for (Graph.Arista<Integer> arista : node.getAristas()) //Caminos desde nuestro nodo
+            {
+                if (unvisited.contains(arista.getToNode())) //Si aun no visitamos este
+                    aristasDisponibles.add(arista);
+            }
+
+            //Nos da la de menor costo por la estructura de datos, pero puede caer en ciclos
+            while (!aristasDisponibles.isEmpty())
+            {
+                int cheapest_index = 0;
+                Graph.Arista<Integer> arista_barata = aristasDisponibles.get(cheapest_index);
+                for (int i = 0; i < aristasDisponibles.size(); i++) //Usando una lista iteramos por la mas barata de ellas
+                {
+                    if (arista_barata.getCost() > aristasDisponibles.get(i).getCost())
+                    {
+                        cheapest_index=i;
+                        arista_barata=aristasDisponibles.get(i);
+                    }
+                }
+                if (unvisited.contains(arista_barata.getToNode()))
+                {
+                    cost += arista_barata.getCost(); //Acumulamos esta minima
+                    node = arista_barata.getToNode(); //Avanzamos
+                    camino.add(arista_barata); // Vamos guardando esta ruta
+                    break;
+                }
+                aristasDisponibles.remove(cheapest_index);
+            }
+
+            unvisited.remove(node);     //Vamos quitando sin visitar
+        }
+        return (new Graph.CostPathPair<Integer>(cost,camino));
     }
 
     public Graph.CostPathPair<Integer> Prim_Heap(Graph<Integer> graph,Graph.Node<T> inicio)
@@ -53,9 +95,23 @@ public class Algoritmos<T extends Comparable<T>>
 
     public Graph.CostPathPair<Integer> Kruskal(Graph<Integer> graph)
     {
-        return null;
-    }
+        final List<Graph.Arista<Integer>> camino = new ArrayList<>();
+        int cost = 0;
 
+        Collections.sort(graph.getEdges());
+        //AQUI YA TENEMOS ORDENADOS DE MENOR A MAYOR LOS PESOS
+
+        for (Graph.Arista a: graph.getEdges()) //Iteramos de menor a mayor
+        {
+            boolean ciclado=false;
+
+            //Aqui verificamos al agregar a no nos genere un ciclo
+
+            if (!ciclado)
+                camino.add(a);
+        }
+        return (new Graph.CostPathPair<Integer>(cost,camino));
+    }
 
     public Graph.CostPathPair<Integer> Kruskal_UNION(Graph<Integer> graph)
     {
