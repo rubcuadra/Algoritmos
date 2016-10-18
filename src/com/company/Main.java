@@ -70,10 +70,15 @@ public class Main
 
         Algoritmos<Integer> algoritmos = new Algoritmos<Integer>();
 
+        //int start = (int) System.currentTimeMillis();
+
         //Graph.CostPathPair<Integer> prim = algoritmos.Prim(g, g.getNodes().get(primStartNode));
         //Graph.CostPathPair<Integer> prim_heap = algoritmos.Prim_Heap(g,g.getNodes().get(primStartNode));
         //Graph.CostPathPair<Integer> krus= algoritmos.Kruskal(g);
         //Graph.CostPathPair<Integer> krus_union = algoritmos.Kruskal_UNION(g);
+
+        //int _final = (int) (System.currentTimeMillis() - start);
+        //System.out.println( (double) _final/1000 + " Segundos");
 
         //System.out.println(prim);
         //System.out.println(prim_heap);
