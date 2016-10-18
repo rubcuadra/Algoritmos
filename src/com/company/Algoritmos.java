@@ -1,5 +1,6 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -106,11 +107,11 @@ public class Algoritmos<T extends Comparable<T>>
         {
             Graph.Arista a = graph.getEdges().get(i);
 
-            boolean back = areBackwardConnected(a.getFromNode(),a.getToNode(),new ArrayList<>(camino));
-            boolean front = areForwardConnected(a.getFromNode(),a.getToNode(),new ArrayList<>(camino));
-            //esos ya estan bien
-            if ( !(back||front) ) //Si NO esta conectado ya sea back o front
+            if ( !(estanConectados(a.getFromNode(),a.getToNode(),new ArrayList<>(camino))) ) //Si NO esta conectado ya sea back o front
+            {
                 camino.add(a);
+                cost+=a.getCost();
+            }
         }
         return (new Graph.CostPathPair<Integer>(cost,camino));
     }
@@ -155,6 +156,50 @@ public class Algoritmos<T extends Comparable<T>>
             }
         }
         return (new Graph.CostPathPair<Integer>(cost,camino));
+    }
+
+    public static boolean estanConectados(Graph.Node<Integer> from,Graph.Node<Integer> to,List<Graph.Arista<Integer>> path )
+    {
+        if (from==to)
+            return true;
+
+        boolean v = false;
+        for (int i = 0; i < path.size() ; i++)
+        {
+            Graph.Arista<Integer> current = path.get(i);
+            Graph.Node<Integer> pivotNode;
+            if (current.getFromNode()==from) //Esta arista empieza desde nuestro from
+            {
+                pivotNode = path.get(i).getToNode();
+                List<Graph.Arista<Integer>> a = new ArrayList<>(path);
+                a.remove(i);
+                v|=estanConectados(pivotNode,to,a);
+            }
+            else if (current.getToNode()==from) //Esta arista termina en nuestro inicio
+            {
+                pivotNode = path.get(i).getFromNode();
+                List<Graph.Arista<Integer>> a = new ArrayList<>(path);
+                a.remove(i);
+                v|=estanConectados(pivotNode,to,a);
+            }
+            if(current.getFromNode()==to) //Esta arista inicia en nuestro final
+            {
+                pivotNode = path.get(i).getToNode();
+                List<Graph.Arista<Integer>> a = new ArrayList<>(path);
+                a.remove(i);
+                v|= estanConectados(pivotNode,to,a);
+            }
+            else if (current.getToNode()==to) //Esta arista termina en nuestro final
+            {
+                pivotNode = path.get(i).getFromNode();
+                List<Graph.Arista<Integer>> a = new ArrayList<>(path);
+                a.remove(i);
+                v|=estanConectados(pivotNode,to,a);
+            }
+            if (v)
+                break;
+        }
+        return v;
     }
 
     public static boolean areForwardConnected(Graph.Node<Integer> from,Graph.Node<Integer> to,List<Graph.Arista<Integer>> path )
