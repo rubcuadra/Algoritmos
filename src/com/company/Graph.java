@@ -5,15 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-/**
- * Graph. Could be directed or undirected depending on the TYPE enum. A graph is
- * an abstract representation of a set of objects where some pairs of the
- * objects are connected by links.
- * 
- * http://en.wikipedia.org/wiki/Graph_(mathematics)
- * 
- * @author Justin Wetherell <phishman3579@gmail.com>
+/*
+    Archivo helper tomado de https://github.com/phishman3579
  */
 @SuppressWarnings("unchecked")
 public class Graph<T extends Comparable<T>> {
@@ -25,7 +18,6 @@ public class Graph<T extends Comparable<T>> {
         DIRECTED, UNDIRECTED
     }
 
-    /** Defaulted to undirected */
     private TYPE type = TYPE.UNDIRECTED;
 
     public Graph() { }
@@ -34,7 +26,6 @@ public class Graph<T extends Comparable<T>> {
         this.type = type;
     }
 
-    /** Deep copies **/
     public Graph(Graph<T> g) {
         type = g.getType();
 
@@ -49,28 +40,10 @@ public class Graph<T extends Comparable<T>> {
         }
     }
 
-    /**
-     * Creates a Graph from the Nodes and aristas. This defaults to an undirected Graph
-     * 
-     * NOTE: Duplicate Nodes and aristas ARE allowed.
-     * NOTE: Copies the node and edge objects but does NOT store the Collection parameters itself.
-     * 
-     * @param Nodes Collection of Nodes
-     * @param aristas Collection of aristas
-     */
     public Graph(Collection<Node<T>> Nodes, Collection<Arista<T>> aristas) {
         this(TYPE.UNDIRECTED, Nodes, aristas);
     }
 
-    /**
-     * Creates a Graph from the Nodes and aristas.
-     * 
-     * NOTE: Duplicate Nodes and aristas ARE allowed.
-     * NOTE: Copies the node and edge objects but does NOT store the Collection parameters itself.
-     * 
-     * @param Nodes Collection of Nodes
-     * @param aristas Collection of aristas
-     */
     public Graph(TYPE type, Collection<Node<T>> Nodes, Collection<Arista<T>> aristas) {
         this(type);
 
@@ -105,9 +78,6 @@ public class Graph<T extends Comparable<T>> {
         return allAristas;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         int code = this.type.hashCode() + this.allNodes.size() + this.allAristas.size();
@@ -118,9 +88,6 @@ public class Graph<T extends Comparable<T>> {
         return 31 * code;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object g1) {
         if (!(g1 instanceof Graph))
@@ -167,9 +134,6 @@ public class Graph<T extends Comparable<T>> {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
@@ -193,7 +157,6 @@ public class Graph<T extends Comparable<T>> {
             this.weight = weight;
         }
 
-        /** Deep copies the aristas along with the value and weight **/
         public Node(Node<T> node)
         {
             this(node.value, node.weight);
@@ -237,18 +200,12 @@ public class Graph<T extends Comparable<T>> {
             return false;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             final int code = this.value.hashCode() + this.weight + this.aristas.size();
             return 31 * code;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(Object v1) {
             if (!(v1 instanceof Graph.Node))
@@ -281,9 +238,6 @@ public class Graph<T extends Comparable<T>> {
             return true;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int compareTo(Node<T> v) {
             final int valueComp = this.value.compareTo(v.value);
@@ -315,9 +269,6 @@ public class Graph<T extends Comparable<T>> {
             return 0;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             final StringBuilder builder = new StringBuilder();
@@ -363,18 +314,12 @@ public class Graph<T extends Comparable<T>> {
             return to;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             final int cost = (this.cost * (this.getFromNode().hashCode() * this.getToNode().hashCode())); 
             return 31 * cost;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(Object e1) {
             if (!(e1 instanceof Graph.Arista))
@@ -397,9 +342,6 @@ public class Graph<T extends Comparable<T>> {
             return true;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int compareTo(Arista<T> e) {
             if (this.cost < e.cost)
@@ -418,9 +360,6 @@ public class Graph<T extends Comparable<T>> {
             return 0;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             StringBuilder builder = new StringBuilder();
@@ -455,17 +394,11 @@ public class Graph<T extends Comparable<T>> {
             return node;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             return 31 * (this.cost * ((this.node !=null)?this.node.hashCode():1));
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(Object e1) {
             if (!(e1 instanceof CostNodePair))
@@ -481,9 +414,6 @@ public class Graph<T extends Comparable<T>> {
             return true;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int compareTo(CostNodePair<T> p) {
             if (p == null)
@@ -496,9 +426,6 @@ public class Graph<T extends Comparable<T>> {
             return 0;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             final StringBuilder builder = new StringBuilder();
@@ -532,9 +459,6 @@ public class Graph<T extends Comparable<T>> {
             return path;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public int hashCode() {
             int hash = this.cost;
@@ -543,9 +467,6 @@ public class Graph<T extends Comparable<T>> {
             return 31 * hash;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public boolean equals(Object obj) {
             if (!(obj instanceof CostPathPair))
@@ -567,9 +488,6 @@ public class Graph<T extends Comparable<T>> {
             return true;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString()
         {

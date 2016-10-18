@@ -2,8 +2,8 @@ package com.company;
 
 import java.util.List;
 
-/**
- * Created by Ruben on 10/17/16.
+/*
+    Archivo helper tomado de https://github.com/phishman3579
  */
 @SuppressWarnings("unchecked")
 public class DisjointSet<T extends Object> {
@@ -22,12 +22,6 @@ public class DisjointSet<T extends Object> {
         return -1;
     }
 
-    /**
-     * Creates a set of one element.
-     *
-     * @param v Value to use when creating the set
-     * @return Item representing the value
-     */
     public static final <T extends Object> Item<T> makeSet(T v)
     {
         final Item<T> item = new Item<T>(null,v);
@@ -35,14 +29,6 @@ public class DisjointSet<T extends Object> {
         return item;
     }
 
-    /**
-     * Determine which subset a particular element is in. Find returns an item from this set that serves as its "representative"; by comparing the result
-     * of two Find operations, one can determine whether two elements are in the same subset. This method uses path compression which is a way of flattening
-     * the structure of the tree whenever Find is used on it.
-     *
-     * @param x Find the "representative" of this Item
-     * @return "Representative" of this Item
-     */
     public static final <T extends Object> Item<T> find(Item<T> x) {
         if (x == null)
             return null;
@@ -52,13 +38,6 @@ public class DisjointSet<T extends Object> {
         return x.parent;
     }
 
-    /**
-     * Join two subsets into a single subset. This method uses 'union by rank' which always attaches the smaller tree to the root of the larger tree.
-     *
-     * @param x Subset 1 to join
-     * @param y Subset 2 to join
-     * @return Resulting Set of joining Subset 1 and Subset 2
-     */
     public static final <T extends Object> Item<T> union(Item<T> x, Item<T> y) {
         final Item<T> xRoot = find(x);
         final Item<T> yRoot = find(y);
@@ -86,19 +65,10 @@ public class DisjointSet<T extends Object> {
         return xRoot;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "Nothing here to see, yet.";
-    }
-
     public static final class Item<T> {
 
         private Item<T> parent;
         private T value;
-        /** Rank is not the actual depth of the tree rather it is an upper bound. As such, on a find operation, the rank is allowed to get out of sync with the depth. **/
         private long rank;
 
         public Item(Item<T> parent, T value) {
