@@ -45,6 +45,17 @@ public class Algoritmos<T extends Comparable<T>>
         return (new Graph.CostPathPair<Integer>(cost,camino));
     }
 
+    public Graph.CostPathPair<Integer> Prim_Heap(Graph<Integer> graph,Graph.Node<T> inicio)
+    {
+        return null;
+    }
+
+    public Graph.CostPathPair<Integer> Kruskal(Graph<Integer> graph)
+    {
+        return null;
+    }
+
+
     public Graph.CostPathPair<Integer> Kruskal_UNION(Graph<Integer> graph)
     {
         final List<Graph.Arista<Integer>> camino = new ArrayList<>();

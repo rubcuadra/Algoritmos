@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Main
 {
-    private static final String path="src/com/company/test.txt";
+    private static final String path="src/com/company/P2Edges.txt";
     private static final Integer primStartNode = 0;
 
     public static void main(String[] args)
@@ -69,13 +69,13 @@ public class Main
         System.out.println("Total de Aristas NO dirigidas: "+g.getEdges().size()/2); //Por que como es no dirigido se duplican aristas
 
         Algoritmos<Integer> algoritmos = new Algoritmos<Integer>();
-        Graph.CostPathPair<Integer> prim = algoritmos.Prim(g, g.getNodes().get(primStartNode));
-        Graph.CostPathPair<Integer> krus_union = algoritmos.Kruskal_UNION(g);
+        //Graph.CostPathPair<Integer> prim = algoritmos.Prim(g, g.getNodes().get(primStartNode));
+        Graph.CostPathPair<Integer> prim_heap = algoritmos.Prim_Heap(g,g.getNodes().get(primStartNode));
+        //Graph.CostPathPair<Integer> krus_union = algoritmos.Kruskal_UNION(g);
 
-        System.out.println(prim);
-        System.out.println(krus_union);
+        //System.out.println(prim);
+        //System.out.println(krus_union);
 
-        //for (Graph.Arista<Integer> a:prim.getPath()) if (!krus.getPath().contains(a)) System.out.print(a);
     }
 
     public static int indexOfNodeWithValue(List<Graph.Node> nodes,int val)
