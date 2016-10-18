@@ -96,18 +96,20 @@ public class Algoritmos<T extends Comparable<T>>
     public Graph.CostPathPair<Integer> Kruskal(Graph<Integer> graph)
     {
         final List<Graph.Arista<Integer>> camino = new ArrayList<>();
+
         int cost = 0;
 
         Collections.sort(graph.getEdges());
         //AQUI YA TENEMOS ORDENADOS DE MENOR A MAYOR LOS PESOS
 
-        for (Graph.Arista a: graph.getEdges()) //Iteramos de menor a mayor
+        for (int i = 0; i < graph.getEdges().size(); i++)
         {
-            boolean ciclado=false;
-
-            //Aqui verificamos al agregar a no nos genere un ciclo
-
-            if (!ciclado)
+            Graph.Arista a = graph.getEdges().get(i);
+            
+            boolean back = areBackwardConnected(a.getFromNode(),a.getToNode(),new ArrayList<>(camino));
+            boolean front = areForwardConnected(a.getFromNode(),a.getToNode(),new ArrayList<>(camino));
+            //esos ya estan bien
+            if ( !(back||front) ) //Si NO esta conectado ya sea back o front
                 camino.add(a);
         }
         return (new Graph.CostPathPair<Integer>(cost,camino));
@@ -155,4 +157,36 @@ public class Algoritmos<T extends Comparable<T>>
         return (new Graph.CostPathPair<Integer>(cost,camino));
     }
 
+    public static boolean areForwardConnected(Graph.Node<Integer> from,Graph.Node<Integer> to,List<Graph.Arista<Integer>> path )
+    {
+        if (from==to)
+            return true;
+
+        for (int i = 0; i < path.size() ; i++)
+        {
+            if (path.get(i).getFromNode()==from) //Ya esta en el camino, ver que no pueda llegar al siguiente
+            {
+                Graph.Node<Integer> fromNode = path.get(i).getToNode();
+                path.remove(i);
+                return areForwardConnected(fromNode,to,path); //ahora del to al que queremos
+            }
+        }
+        return false;
+    }
+    private static boolean areBackwardConnected(Graph.Node<Integer> from,Graph.Node<Integer> to,List<Graph.Arista<Integer>> path )
+    {
+        if (from==to)
+            return true;
+
+        for (int i = 0; i < path.size() ; i++)
+        {
+            if (path.get(i).getToNode()==from) //Ya esta en el camino, ver que no pueda llegar al siguiente
+            {
+                Graph.Node<Integer> toN = path.get(i).getFromNode();
+                path.remove(i);
+                return areBackwardConnected(toN,to,path); //ahora del to al que queremos
+            }
+        }
+        return false;
+    }
 }

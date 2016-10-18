@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Main
 {
-    private static final String path="src/com/company/P2Edges.txt";
+    private static final String path="src/com/company/test.txt";
     private static final Integer primStartNode = 0;
 
     public static void main(String[] args)
@@ -74,7 +74,7 @@ public class Main
 
         //Graph.CostPathPair<Integer> prim = algoritmos.Prim(g, g.getNodes().get(primStartNode));
         //Graph.CostPathPair<Integer> prim_heap = algoritmos.Prim_Heap(g,g.getNodes().get(primStartNode));
-        //Graph.CostPathPair<Integer> krus= algoritmos.Kruskal(g);
+        Graph.CostPathPair<Integer> krus= algoritmos.Kruskal(g);
         //Graph.CostPathPair<Integer> krus_union = algoritmos.Kruskal_UNION(g);
 
         //int _final = (int) (System.currentTimeMillis() - start);
@@ -82,7 +82,7 @@ public class Main
 
         //System.out.println(prim);
         //System.out.println(prim_heap);
-        //System.out.println(krus);
+        System.out.println(krus);
         //System.out.println(krus_union);
 
     }
